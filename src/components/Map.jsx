@@ -27,58 +27,51 @@ const Map = () => {
         const response = await fetch("https://kyn-be.vercel.app/reviews");
         const data = await response.json();
     
+        console.log("Fetched Data:", data); // Debugging output
     
-        Object.values(data).forEach((reviews) => {
-          reviews.forEach(({ lat, lng, text, location }) => {
-            if (!lat || !lng || !text || !location) {
-              console.warn("Invalid review data:", { lat, lng, text, location });
-              return;
-            }
+        if (!Array.isArray(data)) {
+          console.error("Unexpected response format:", data);
+          return;
+        }
     
-            // Create person marker
-            const markerEl = document.createElement("div");
-            markerEl.innerHTML = "👤"; // Person icon
-            markerEl.style.fontSize = "24px";
-            markerEl.style.cursor = "pointer";
+        data.forEach(({ lat, lng, text, location }) => {
+          if (!lat || !lng || !text || !location) {
+            console.warn("Invalid review data:", { lat, lng, text, location });
+            return;
+          }
     
-            // Create popup with location and review
-            const popup = new mapboxgl.Popup({
-              closeButton: false,
-              closeOnClick: false,
-              offset: 10,
-              maxWidth: "none", // Allow unlimited width
-            }).setHTML(
-              `<div style="
-                background-color: white;
-                color: black;
-                font-size: 14px;
-                padding: 10px;
-                border-radius: 8px;
-                max-width: 300px; /* Adjust this value as needed */
-                word-wrap: break-word;
-                white-space: normal;
-              ">
-                <strong>Location:</strong> ${location}<br>
-                <strong>Review:</strong> ${text}
-              </div>`
-            );
-            
-            
+          // Create person marker
+          const markerEl = document.createElement("div");
+          markerEl.innerHTML = "👤"; // Person icon
+          markerEl.style.fontSize = "24px";
+          markerEl.style.cursor = "pointer";
     
-            // Add marker
-            const marker = new mapboxgl.Marker(markerEl)
-              .setLngLat([lng, lat])
-              .addTo(mapRef.current);
+          // Create popup with location and review
+          const popup = new mapboxgl.Popup({
+            closeButton: false,
+            closeOnClick: false,
+            offset: 10,
+            maxWidth: "none",
+          }).setHTML(
+            `<div style="background-color: white; color: black; font-size: 14px; padding: 10px; border-radius: 8px; max-width: 300px; word-wrap: break-word; white-space: normal;">
+              <strong>Location:</strong> ${location}<br>
+              <strong>Review:</strong> ${text}
+            </div>`
+          );
     
-            // Show popup on hover
-            marker.getElement().addEventListener("mouseenter", () => {
-              popup.addTo(mapRef.current).setLngLat([lng, lat]);
-            });
+          // Add marker
+          const marker = new mapboxgl.Marker(markerEl)
+            .setLngLat([lng, lat])
+            .addTo(mapRef.current);
     
-            // Hide popup on mouse leave
-            marker.getElement().addEventListener("mouseleave", () => {
-              popup.remove();
-            });
+          // Show popup on hover
+          marker.getElement().addEventListener("mouseenter", () => {
+            popup.addTo(mapRef.current).setLngLat([lng, lat]);
+          });
+    
+          // Hide popup on mouse leave
+          marker.getElement().addEventListener("mouseleave", () => {
+            popup.remove();
           });
         });
       } catch (error) {

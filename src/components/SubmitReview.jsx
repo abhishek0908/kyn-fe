@@ -68,11 +68,17 @@ const SubmitReview = () => {
   return (
     <div className="max-w-3xl mx-auto mt-20 p-6 bg-gray-900 text-white rounded-xl shadow-lg border border-gray-700">
       <h2 className="text-3xl font-bold text-blue-400 mb-6 text-center">
-        Submit a Review
+        Add a Review
       </h2>
+      <p className="text-gray-200 text-center mb-6 font-medium text-lg">
+        Enter your location and tell us about your experience!
+      </p>
 
       {/* Search Box for Location */}
-      <SearchBox onSearch={handleSearch} />
+      <SearchBox
+        onSearch={handleSearch}
+        className="w-full p-3 bg-gray-800 text-white rounded-md border border-gray-700 focus:ring focus:ring-blue-400"
+      />
 
       {selectedLocation && (
         <p className="text-gray-400 mt-3">
