@@ -128,8 +128,8 @@ const Map = () => {
       <div ref={mapContainerRef} className="w-screen h-screen" />
 
       {/* Search Box */}
-      <div className="absolute top-24 left-1/2 transform -translate-x-1/2 z-50 bg-gray-900 p-3 rounded-lg shadow-lg flex items-center w-11/12 max-w-lg">
-        <input
+      <div className="absolute top-24 left-1/2 transform -translate-x-1/2 z-40 bg-gray-900 p-3 rounded-lg shadow-lg flex items-center w-11/12 max-w-lg">
+      <input
           type="text"
           placeholder="Enter Location"
           value={query}
