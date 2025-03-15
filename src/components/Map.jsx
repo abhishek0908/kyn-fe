@@ -27,7 +27,6 @@ const Map = () => {
         const response = await fetch("https://kyn-be.vercel.app/reviews");
         const data = await response.json();
     
-        console.log("Fetched Reviews:", data); // Debugging: Check the response structure
     
         Object.values(data).forEach((reviews) => {
           reviews.forEach(({ lat, lng, text, location }) => {
