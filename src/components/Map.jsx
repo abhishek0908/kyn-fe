@@ -42,7 +42,7 @@ const Map = () => {
     
           // Create person marker
           const markerEl = document.createElement("div");
-          markerEl.innerHTML = "👤"; // Person icon
+          markerEl.innerHTML = "👨"; // Person icon
           markerEl.style.fontSize = "24px";
           markerEl.style.cursor = "pointer";
     
